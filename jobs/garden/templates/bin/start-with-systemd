@@ -1,0 +1,11 @@
+#!/bin/bash
+
+set -e
+
+exec 1>> "/var/vcap/sys/log/garden/garden_start.stdout.log"
+exec 2>> "/var/vcap/sys/log/garden/garden_start.stderr.log"
+
+rm -f /lib/systemd/system/garden.service
+cp /var/vcap/jobs/garden/config/garden.service /lib/systemd/system/
+/bin/systemctl daemon-reload
+/bin/systemctl start garden.service
